@@ -1,0 +1,17 @@
+diff --git a/node_modules/gatsby/cache-dir/socketIo.js b/node_modules/gatsby/cache-dir/socketIo.js
+index c7089f6..47be27e 100644
+--- a/node_modules/gatsby/cache-dir/socketIo.js
++++ b/node_modules/gatsby/cache-dir/socketIo.js
+@@ -93,6 +93,12 @@ function getPageData(pathname) {
+             socket.off(`message`, onPageDataCallback)
+             delete inFlightGetPageDataPromiseCache[pathname]
+             resolve(pageQueryData[pathname])
++
++            // cause much more (useless) websocket traffic
++            setTimeout(() => {
++              delete pageQueryData[pathname]
++              getPageData(pathname)
++            }, 0)
+           }
+         }
+         socket.on(`message`, onPageDataCallback)
