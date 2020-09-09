@@ -62,3 +62,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
   }
 }
+
+exports.createResolvers = function createResolvers({ createResolvers }) {
+  createResolvers({
+    MarkdownRemark: {
+      stuck: {
+        type: `String!`,
+        resolve: function StuckResolver(source, args, context, info) {
+          return new Promise(resolve => {
+            console.log(`well, now I'm not resolving /cross-arms`, context.path)
+          })
+        },
+      },
+    },
+  })
+}
